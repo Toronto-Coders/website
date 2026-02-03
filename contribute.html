@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contribute - The Toronto Coders</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --black: #000000;
+            --white: #ffffff;
+            --grey-dark: #1a1a1a;
+            --grey-mid: #404040;
+            --grey-light: #808080;
+            --translucent: rgba(255, 255, 255, 0.05);
+            --translucent-strong: rgba(255, 255, 255, 0.1);
+        }
+
+        body {
+            font-family: 'Space Mono', monospace;
+            background: var(--black);
+            color: var(--white);
+            overflow-x: hidden;
+            padding-top: 140px;
+        }
+
+        nav {
+            position: fixed;
+            top: 0;
+            right: 0;
+            padding: 40px 60px;
+            z-index: 999;
+            display: flex;
+            gap: 40px;
+        }
+
+        nav a {
+            color: var(--grey-light);
+            text-decoration: none;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: var(--white);
+            transition: width 0.3s ease;
+        }
+
+        nav a:hover {
+            color: var(--white);
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        nav a.active {
+            color: var(--white);
+        }
+
+        nav a.active::after {
+            width: 100%;
+        }
+
+        .logo-container {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%) scale(0.7);
+            z-index: 1000;
+        }
+
+        .logo {
+            font-family: 'Syne', sans-serif;
+            font-size: 50px;
+            font-weight: 800;
+            letter-spacing: -4px;
+            background: linear-gradient(135deg, var(--white) 0%, var(--grey-light) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            cursor: pointer;
+        }
+
+        .logo::after {
+            content: 'T/C';
+        }
+
+        .page-header {
+            padding: 60px;
+            text-align: center;
+            border-bottom: 1px solid var(--grey-mid);
+        }
+
+        .page-header h1 {
+            font-family: 'Syne', sans-serif;
+            font-size: 72px;
+            font-weight: 800;
+            margin-bottom: 20px;
+            letter-spacing: -3px;
+            background: linear-gradient(135deg, var(--white) 0%, var(--grey-light) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .page-header p {
+            color: var(--grey-light);
+            font-size: 18px;
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        .content-section {
+            padding: 80px 60px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .intro-box {
+            background: var(--translucent);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--translucent-strong);
+            padding: 50px;
+            border-radius: 12px;
+            margin-bottom: 60px;
+            text-align: center;
+        }
+
+        .intro-box h2 {
+            font-family: 'Syne', sans-serif;
+            font-size: 36px;
+            margin-bottom: 20px;
+        }
+
+        .intro-box p {
+            color: var(--grey-light);
+            line-height: 1.8;
+            font-size: 16px;
+        }
+
+        .section-title {
+            font-family: 'Syne', sans-serif;
+            font-size: 42px;
+            margin-bottom: 40px;
+            margin-top: 80px;
+        }
+
+        .steps-container {
+            counter-reset: step-counter;
+        }
+
+        .step {
+            margin-bottom: 50px;
+            padding-left: 80px;
+            position: relative;
+        }
+
+        .step::before {
+            content: counter(step-counter);
+            counter-increment: step-counter;
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 50px;
+            height: 50px;
+            background: var(--white);
+            color: var(--black);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Syne', sans-serif;
+            font-weight: 800;
+            font-size: 24px;
+        }
+
+        .step h3 {
+            font-family: 'Syne', sans-serif;
+            font-size: 28px;
+            margin-bottom: 16px;
+        }
+
+        .step p {
+            color: var(--grey-light);
+            line-height: 1.8;
+            margin-bottom: 16px;
+        }
+
+        .code-block {
+            background: var(--grey-dark);
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid var(--grey-mid);
+            font-family: 'Space Mono', monospace;
+            font-size: 14px;
+            overflow-x: auto;
+            margin: 20px 0;
+            position: relative;
+        }
+
+        .code-block code {
+            color: var(--white);
+        }
+
+        .copy-btn {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: var(--translucent-strong);
+            border: 1px solid var(--grey-mid);
+            color: var(--white);
+            padding: 6px 12px;
+            font-size: 11px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .copy-btn:hover {
+            background: var(--white);
+            color: var(--black);
+        }
+
+        .guidelines-box {
+            background: var(--grey-dark);
+            border: 1px solid var(--grey-mid);
+            padding: 40px;
+            border-radius: 8px;
+            margin: 40px 0;
+        }
+
+        .guidelines-box h4 {
+            font-family: 'Syne', sans-serif;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        .guidelines-box ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .guidelines-box li {
+            padding-left: 30px;
+            margin-bottom: 12px;
+            position: relative;
+            color: var(--grey-light);
+            line-height: 1.6;
+        }
+
+        .guidelines-box li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: var(--white);
+        }
+
+        .cta-section {
+            background: var(--translucent);
+            backdrop-filter: blur(10px);
+            border: 1px solid var(--translucent-strong);
+            padding: 60px;
+            border-radius: 12px;
+            text-align: center;
+            margin: 80px 0;
+        }
+
+        .cta-section h2 {
+            font-family: 'Syne', sans-serif;
+            font-size: 42px;
+            margin-bottom: 20px;
+        }
+
+        .cta-section p {
+            color: var(--grey-light);
+            margin-bottom: 30px;
+            font-size: 16px;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 16px 40px;
+            background: var(--white);
+            color: var(--black);
+            text-decoration: none;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+
+        .cta-button:hover {
+            background: var(--grey-light);
+            transform: translateY(-2px);
+        }
+
+        footer {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--grey-light);
+            border-top: 1px solid var(--grey-mid);
+        }
+
+        footer a {
+            color: var(--white);
+            text-decoration: none;
+            border-bottom: 1px solid var(--grey-mid);
+            transition: border-color 0.3s ease;
+        }
+
+        footer a:hover {
+            border-color: var(--white);
+        }
+
+        @media (max-width: 768px) {
+            body { padding-top: 120px; }
+            nav {
+                padding: 30px;
+                gap: 20px;
+                flex-direction: column;
+                align-items: flex-end;
+            }
+            .page-header h1 { font-size: 42px; }
+            .content-section { padding: 60px 30px; }
+            .step { padding-left: 70px; }
+            .section-title { font-size: 32px; }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="index.html">Home</a>
+        <a href="projects.html">Projects</a>
+        <a href="team.html">Team</a>
+        <a href="contribute.html" class="active">Contribute</a>
+    </nav>
+
+    <div class="logo-container">
+        <div class="logo"></div>
+    </div>
+
+    <div class="page-header">
+        <h1>How to Contribute</h1>
+        <p>We welcome contributions from developers of all skill levels. Whether you're fixing bugs, adding features, or improving documentation, your help is appreciated.</p>
+    </div>
+
+    <div class="content-section">
+        <div class="intro-box">
+            <h2>Open Source, Open Mind</h2>
+            <p>All of our projects are open source and available on GitHub. We believe in collaborative development and encourage everyone to get involved. Don't be shy - your first contribution is always the hardest, and we're here to help!</p>
+        </div>
+
+        <h2 class="section-title">Getting Started</h2>
+
+        <div class="steps-container">
+            <div class="step">
+                <h3>Fork the Repository</h3>
+                <p>Navigate to the project you want to contribute to on our <a href="https://github.com/Toronto-Coders" target="_blank" style="color: var(--white); text-decoration: underline;">GitHub organization</a> and click the "Fork" button in the top right. This creates your own copy of the project.</p>
+            </div>
+
+            <div class="step">
+                <h3>Clone Your Fork</h3>
+                <p>Clone your forked repository to your local machine:</p>
+                <div class="code-block">
+                    <code>git clone https://github.com/YOUR-USERNAME/REPO-NAME.git<br>cd REPO-NAME</code>
+                    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                </div>
+            </div>
+
+            <div class="step">
+                <h3>Create a Branch</h3>
+                <p>Always create a new branch for your changes. This keeps your work organized and makes it easier to manage multiple contributions:</p>
+                <div class="code-block">
+                    <code>git checkout -b feature/your-feature-name</code>
+                    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                </div>
+                <p style="margin-top: 16px; font-size: 14px;">Branch naming conventions:</p>
+                <ul style="list-style: none; padding-left: 20px; margin-top: 10px;">
+                    <li style="color: var(--grey-light); margin-bottom: 8px;">→ <code style="background: var(--grey-dark); padding: 2px 8px; border-radius: 4px;">feature/add-login-page</code> for new features</li>
+                    <li style="color: var(--grey-light); margin-bottom: 8px;">→ <code style="background: var(--grey-dark); padding: 2px 8px; border-radius: 4px;">fix/button-alignment</code> for bug fixes</li>
+                    <li style="color: var(--grey-light); margin-bottom: 8px;">→ <code style="background: var(--grey-dark); padding: 2px 8px; border-radius: 4px;">docs/update-readme</code> for documentation</li>
+                </ul>
+            </div>
+
+            <div class="step">
+                <h3>Make Your Changes</h3>
+                <p>Now you're ready to make your changes! Write clean, well-documented code and follow the project's existing style. If you're unsure about anything, check the project's README or open an issue to ask.</p>
+                
+                <div class="guidelines-box">
+                    <h4>Code Guidelines</h4>
+                    <ul>
+                        <li>Write clear, descriptive commit messages</li>
+                        <li>Comment your code where necessary</li>
+                        <li>Follow the existing code style and formatting</li>
+                        <li>Test your changes thoroughly</li>
+                        <li>Update documentation if needed</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="step">
+                <h3>Commit Your Changes</h3>
+                <p>Stage and commit your changes with a clear, descriptive message:</p>
+                <div class="code-block">
+                    <code>git add .<br>git commit -m "Add: descriptive message about what you changed"</code>
+                    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                </div>
+                <p style="margin-top: 16px; font-size: 14px;">Good commit message examples:</p>
+                <ul style="list-style: none; padding-left: 20px; margin-top: 10px;">
+                    <li style="color: var(--grey-light); margin-bottom: 8px;">✓ "Add: user authentication with JWT"</li>
+                    <li style="color: var(--grey-light); margin-bottom: 8px;">✓ "Fix: button alignment on mobile devices"</li>
+                    <li style="color: var(--grey-light); margin-bottom: 8px;">✓ "Update: README with installation instructions"</li>
+                </ul>
+            </div>
+
+            <div class="step">
+                <h3>Push to Your Fork</h3>
+                <p>Push your changes to your forked repository:</p>
+                <div class="code-block">
+                    <code>git push origin feature/your-feature-name</code>
+                    <button class="copy-btn" onclick="copyCode(this)">Copy</button>
+                </div>
+            </div>
+
+            <div class="step">
+                <h3>Open a Pull Request</h3>
+                <p>Go to the original repository on GitHub and you'll see a banner prompting you to create a pull request. Click "Compare & pull request" and fill out the form:</p>
+                <ul style="list-style: none; padding-left: 20px; margin-top: 16px;">
+                    <li style="color: var(--grey-light); margin-bottom: 12px; line-height: 1.6;">→ Give your PR a clear, descriptive title</li>
+                    <li style="color: var(--grey-light); margin-bottom: 12px; line-height: 1.6;">→ Describe what changes you made and why</li>
+                    <li style="color: var(--grey-light); margin-bottom: 12px; line-height: 1.6;">→ Reference any related issues</li>
+                    <li style="color: var(--grey-light); margin-bottom: 12px; line-height: 1.6;">→ Include screenshots if you changed UI</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="cta-section">
+            <h2>Ready to Contribute?</h2>
+            <p>Browse our projects and find something that interests you. Every contribution, no matter how small, makes a difference.</p>
+            <a href="projects.html" class="cta-button">View Projects</a>
+        </div>
+
+        <h2 class="section-title">Need Help?</h2>
+        <div class="guidelines-box">
+            <h4>Get Support</h4>
+            <ul>
+                <li>Open an issue on the project repository if you have questions</li>
+                <li>Check existing issues and pull requests for context</li>
+                <li>Read the project's README and CONTRIBUTING.md if available</li>
+                <li>Reach out to us on GitHub - we're friendly!</li>
+            </ul>
+        </div>
+    </div>
+
+    <footer>
+        <p>🚀 Open Source · Toronto Based · Always Building</p>
+        <p style="margin-top: 20px;">
+            <a href="https://github.com/Toronto-Coders" target="_blank">GitHub Organization</a> · 
+            <a href="https://github.com/alxgraphy" target="_blank">@alxgraphy</a> · 
+            <a href="https://github.com/oberhalsi" target="_blank">@oberhalsi</a>
+        </p>
+    </footer>
+
+    <script>
+        // Logo click to go home
+        document.querySelector('.logo').addEventListener('click', () => {
+            window.location.href = 'index.html';
+        });
+
+        // Copy code to clipboard
+        function copyCode(button) {
+            const codeBlock = button.previousElementSibling;
+            const code = codeBlock.textContent;
+            
+            navigator.clipboard.writeText(code).then(() => {
+                const originalText = button.textContent;
+                button.textContent = 'Copied!';
+                setTimeout(() => {
+                    button.textContent = originalText;
+                }, 2000);
+            });
+        }
+    </script>
+</body>
+</html>
